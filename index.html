@@ -269,6 +269,11 @@
         <div class="video-wrap">
           <video id="happyVideo" controls playsinline preload="metadata">
             <source src="stitch-happy.mp4" type="video/mp4">
+            <p>Stitch is so excited you're saying yes! 💕</p>
+          </video>
+          <video id="angelVideo" controls playsinline preload="metadata" style="display:none;">
+            <source src="stitch-angel-happy.mp4" type="video/mp4">
+            <p>And now Angel joins the celebration! 💙✨</p>
           </video>
         </div>
         <div class="details">
@@ -301,9 +306,10 @@
     const response = document.getElementById('response');
     const yesResponse = document.getElementById('yesResponse');
     const noResponse = document.getElementById('noResponse');
-    const askVideo = document.getElementById('askVideo');
+    const askVideo   = document.getElementById('askVideo');
     const happyVideo = document.getElementById('happyVideo');
-    const sadVideo = document.getElementById('sadVideo');
+    const angelVideo = document.getElementById('angelVideo');
+    const sadVideo   = document.getElementById('sadVideo');
 
     // Customize here
     const dinnerDetails = {
@@ -320,11 +326,13 @@
       if (!videoEl) return;
       videoEl.pause();
       try { videoEl.currentTime = 0; } catch {}
+      videoEl.style.display = 'none'; // hide if needed
     }
 
     function stopAllVideos() {
       stopVideo(askVideo);
       stopVideo(happyVideo);
+      stopVideo(angelVideo);
       stopVideo(sadVideo);
     }
 
@@ -354,7 +362,17 @@
 
     yesBtn.addEventListener('click', () => {
       show('yes');
+      happyVideo.style.display = 'block';
+      angelVideo.style.display = 'none';
       happyVideo?.play().catch(() => {});
+
+      // Chain: when happy video ends → play Angel video
+      happyVideo.onended = () => {
+        happyVideo.style.display = 'none';
+        angelVideo.style.display = 'block';
+        angelVideo?.play().catch(() => {});
+      };
+
       setTimeout(() => clearInterval(heartTimer), 1200);
       const r = document.querySelector('.card').getBoundingClientRect();
       for (let i = 0; i < 18; i++) {
@@ -368,13 +386,14 @@
       sadVideo?.play().catch(() => {});
     });
 
-    // Pause videos when tab is hidden
+    // Pause everything when tab is hidden
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopAllVideos();
     });
 
-    // Initial state: stop response videos
+    // Initial state
     stopVideo(happyVideo);
+    stopVideo(angelVideo);
     stopVideo(sadVideo);
   </script>
 </body>
