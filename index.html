@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hi Roxanne 💙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#fff4f7;
+      --bg2:#ffe7ef;
+      --card: rgba(255,255,255,.70);
+      --stroke: rgba(255,255,255,.65);
+      --ink:#17171a;
+      --muted: rgba(23,23,26,.70);
+      --accent:#3b82f6;
+      --accent2:#ff4d7d;
+      --shadow: 0 22px 70px rgba(10, 10, 20, .14);
+      --shadow2: 0 12px 30px rgba(10, 10, 20, .12);
+      --radius: 26px;
+    }
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x:hidden;
+      background:
+        radial-gradient(900px 520px at 15% 10%, rgba(255,255,255,.92) 0%, rgba(255,255,255,0) 62%),
+        radial-gradient(900px 520px at 85% 18%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(1200px 700px at 50% 120%, rgba(59,130,246,.14) 0%, rgba(59,130,246,0) 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding: clamp(16px, 3vw, 28px);
+    }
+    .shimmer{
+      position:fixed;
+      inset:-40%;
+      background: conic-gradient(from 180deg at 50% 50%,
+        rgba(255,255,255,0) 0deg,
+        rgba(255,255,255,.10) 30deg,
+        rgba(255,255,255,0) 75deg,
+        rgba(255,255,255,.08) 120deg,
+        rgba(255,255,255,0) 180deg,
+        rgba(255,255,255,.10) 240deg,
+        rgba(255,255,255,0) 360deg
+      );
+      filter: blur(18px);
+      opacity:.55;
+      animation: drift 14s linear infinite;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes drift{
+      from{ transform: translate3d(-6%, -2%, 0) rotate(0deg); }
+      to { transform: translate3d(6%, 2%, 0) rotate(360deg); }
+    }
+    .card{
+      width: min(760px, 94vw);
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow:hidden;
+      position:relative;
+      z-index:1;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius: var(--radius);
+      padding:1px;
+      background: linear-gradient(135deg, rgba(59,130,246,.45), rgba(255,77,125,.35), rgba(255,255,255,.25));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events:none;
+      opacity:.55;
+    }
+    .inner{
+      padding: clamp(20px, 4vw, 34px);
+      display:grid;
+      gap: 16px;
+      text-align:center;
+    }
+    .topline{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      align-items:center;
+      font-weight:700;
+      letter-spacing:.2px;
+      font-size:12px;
+      text-transform: uppercase;
+      color: rgba(23,23,26,.65);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow: 0 10px 24px rgba(10, 10, 20, .08);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 7px rgba(59,130,246,.12);
+    }
+    h1{
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(28px, 5vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -.4px;
+    }
+    h2{
+      margin: 0;
+      font-size: clamp(15px, 2.2vw, 18px);
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .video-wrap{
+      width: min(560px, 100%);
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.65);
+      box-shadow: var(--shadow2);
+      background: rgba(255,255,255,.45);
+    }
+    video{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .divider{
+      height:1px;
+      width: min(560px, 100%);
+      margin: 6px auto 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.9), rgba(255,255,255,0));
+    }
+    .buttons{
+      width: min(520px, 100%);
+      margin: 6px auto 0;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 420px){
+      .buttons{ grid-template-columns: 1fr; }
+    }
+    button{
+      width:100%;
+      font-size: 16px;
+      padding: 14px 16px;
+      border: 0;
+      border-radius: 16px;
+      cursor:pointer;
+      font-weight: 800;
+      transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:hover{ transform: translateY(-1px); }
+    button:active{ transform: translateY(0) scale(.99); }
+    button:focus-visible{ outline: 3px solid var(--accent); outline-offset: 3px; }
+    #yesBtn{
+      color:white;
+      background: linear-gradient(135deg, var(--accent), #2563eb);
+      box-shadow: 0 16px 30px rgba(59,130,246,.26);
+    }
+    #noBtn{
+      color:var(--ink);
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 12px 26px rgba(10, 10, 20, .10);
+    }
+    .hearts{
+      font-size: clamp(28px, 4.5vw, 44px);
+      margin: 4px 0 2px;
+    }
+    .details{
+      width: min(560px, 100%);
+      margin: 0 auto;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(59,130,246,.08);
+      border: 1px solid rgba(59,130,246,.18);
+      color: rgba(23,23,26,.82);
+      text-align:left;
+      line-height:1.6;
+    }
+    .details b{ color: rgba(23,23,26,.92); }
+    .note{
+      font-size: 12.5px;
+      color: rgba(23,23,26,.60);
+      margin-top: 2px;
+    }
+    .float-heart{
+      position: fixed;
+      width: 14px; height: 14px;
+      transform: rotate(45deg);
+      border-radius: 4px;
+      opacity: .65;
+      pointer-events:none;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 10px 18px rgba(255,77,125,.14));
+      z-index:0;
+    }
+    .float-heart::before, .float-heart::after{
+      content:"";
+      position:absolute;
+      width: 14px; height: 14px;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .float-heart::before{ left:-7px; top:0; }
+    .float-heart::after { left:0; top:-7px; }
+    @keyframes floatUp{
+      from{ transform: translateY(0) rotate(45deg) scale(1); }
+      to { transform: translateY(-120vh) rotate(45deg) scale(1.18); opacity:0; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .shimmer, .float-heart{ animation:none !important; }
+      button{ transition:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shimmer" aria-hidden="true"></div>
+  <main class="card" id="card">
+    <section class="inner" id="question">
+      <div class="topline">
+        <div class="pill"><span class="dot"></span><span>Hi Roxanne 💙</span></div>
+      </div>
+      <h1>Will you be my Valentine?</h1>
+      <div class="video-wrap">
+        <video id="askVideo" controls autoplay muted loop playsinline preload="metadata">
+          <source src="stitch-ask.mp4" type="video/mp4">
+          <p>Your browser doesn't support video — but imagine Stitch giving you the biggest puppy eyes 🥺</p>
+        </video>
+      </div>
+      <h2>Just one question… and I’m really hoping for one answer. 💙</h2>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="buttons">
+        <button id="yesBtn" aria-label="Say Yes!">Yes! 🥰</button>
+        <button id="noBtn" aria-label="Say No">No 😢</button>
+      </div>
+      <div class="note" id="note">P.S. The “No” button is just being honest… but I’m still hoping! 😄</div>
+    </section>
+
+    <section class="inner" id="response" style="display:none;">
+      <!-- YES RESPONSE -->
+      <div id="yesResponse" style="display:none;">
+        <div class="hearts">💙💙💙</div>
+        <h1>Yayyyy! I’m the happiest guy alive! 🎉</h1>
+        <div class="video-wrap">
+          <video id="happyVideo" controls playsinline preload="metadata">
+            <source src="stitch-happy.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="details">
+          <div><b>Plan:</b> Dinner together 💕</div>
+          <div><b>Venue:</b> <span id="venueText">That cozy spot we talked about</span></div>
+          <div><b>Date:</b> <span id="dateText">February 14, 2026</span></div>
+          <div><b>Time:</b> <span id="timeText">7:30 PM</span></div>
+          <div style="margin-top:10px;"><b>Note:</b> Can’t wait to see your smile. You’re my favorite person. 💙</div>
+        </div>
+      </div>
+
+      <!-- NO RESPONSE -->
+      <div id="noResponse" style="display:none;">
+        <div class="hearts">😭😭😭</div>
+        <h1>Aww… okay… 🥺</h1>
+        <div class="video-wrap">
+          <video id="sadVideo" controls playsinline preload="metadata">
+            <source src="stitch-sad.mp4" type="video/mp4">
+          </video>
+        </div>
+        <h2>Maybe next time? I’ll still be cheering for us… and I’ll always think you’re amazing. 💙</h2>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const question = document.getElementById('question');
+    const response = document.getElementById('response');
+    const yesResponse = document.getElementById('yesResponse');
+    const noResponse = document.getElementById('noResponse');
+    const askVideo = document.getElementById('askVideo');
+    const happyVideo = document.getElementById('happyVideo');
+    const sadVideo = document.getElementById('sadVideo');
+
+    // Customize here
+    const dinnerDetails = {
+      venue: "That cozy spot we talked about",   // ← change this!
+      date: "February 14, 2026",
+      time: "7:30 PM"
+    };
+
+    document.getElementById('venueText').textContent = dinnerDetails.venue;
+    document.getElementById('dateText').textContent = dinnerDetails.date;
+    document.getElementById('timeText').textContent = dinnerDetails.time;
+
+    function stopVideo(videoEl) {
+      if (!videoEl) return;
+      videoEl.pause();
+      try { videoEl.currentTime = 0; } catch {}
+    }
+
+    function stopAllVideos() {
+      stopVideo(askVideo);
+      stopVideo(happyVideo);
+      stopVideo(sadVideo);
+    }
+
+    function show(screen) {
+      stopAllVideos();
+      question.style.display = 'none';
+      response.style.display = 'block';
+      yesResponse.style.display = (screen === 'yes') ? 'block' : 'none';
+      noResponse.style.display = (screen === 'no') ? 'block' : 'none';
+    }
+
+    // Floating hearts
+    function spawnHeart(x) {
+      const h = document.createElement('div');
+      h.className = 'float-heart';
+      h.style.left = (x ?? Math.random() * window.innerWidth) + 'px';
+      h.style.bottom = '-22px';
+      h.style.animationDuration = (4.6 + Math.random() * 3.6).toFixed(2) + 's';
+      h.style.opacity = (0.45 + Math.random() * 0.35).toFixed(2);
+      const isBlue = Math.random() > 0.45;
+      h.style.background = isBlue ? 'rgba(59,130,246,.85)' : 'rgba(255,77,125,.80)';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 9000);
+    }
+
+    const heartTimer = setInterval(() => spawnHeart(), 700);
+
+    yesBtn.addEventListener('click', () => {
+      show('yes');
+      happyVideo?.play().catch(() => {});
+      setTimeout(() => clearInterval(heartTimer), 1200);
+      const r = document.querySelector('.card').getBoundingClientRect();
+      for (let i = 0; i < 18; i++) {
+        const x = r.left + r.width / 2 + (Math.random() * 200 - 100);
+        setTimeout(() => spawnHeart(x), i * 55);
+      }
+    });
+
+    noBtn.addEventListener('click', () => {
+      show('no');
+      sadVideo?.play().catch(() => {});
+    });
+
+    // Pause videos when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopAllVideos();
+    });
+
+    // Initial state: stop response videos
+    stopVideo(happyVideo);
+    stopVideo(sadVideo);
+  </script>
+</body>
+</html>
