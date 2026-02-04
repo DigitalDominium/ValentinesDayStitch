@@ -139,11 +139,15 @@
       border: 1px solid rgba(255,255,255,.65);
       box-shadow: var(--shadow2);
       background: rgba(255,255,255,.45);
+      position: relative;
     }
     video{
       display:block;
       width:100%;
       height:auto;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
     .divider{
       height:1px;
@@ -266,14 +270,18 @@
       <div id="yesResponse" style="display:none;">
         <div class="hearts">💙💙💙</div>
         <h1>Yayyyy! I’m the happiest guy alive! 🎉</h1>
-        <div class="video-wrap">
+        <div class="video-wrap" style="height: auto; min-height: 315px;"> <!-- reserve space to prevent jump -->
           <video id="happyVideo" controls playsinline preload="metadata">
             <source src="stitch-happy.mp4" type="video/mp4">
             <p>Stitch is so excited you're saying yes! 💕</p>
           </video>
-          <video id="angelVideo" controls playsinline preload="metadata" style="display:none;">
+          <video id="angelVideo" controls playsinline preload="metadata">
             <source src="stitch-angel-happy.mp4" type="video/mp4">
             <p>And now Angel joins the celebration! 💙✨</p>
+          </video>
+          <video id="dancingVideo" controls playsinline preload="metadata">
+            <source src="stitch-dancing.mp4" type="video/mp4">
+            <p>Time to dance — we're celebrating! 🕺💃</p>
           </video>
         </div>
         <div class="details">
@@ -306,10 +314,11 @@
     const response = document.getElementById('response');
     const yesResponse = document.getElementById('yesResponse');
     const noResponse = document.getElementById('noResponse');
-    const askVideo   = document.getElementById('askVideo');
-    const happyVideo = document.getElementById('happyVideo');
-    const angelVideo = document.getElementById('angelVideo');
-    const sadVideo   = document.getElementById('sadVideo');
+    const askVideo    = document.getElementById('askVideo');
+    const happyVideo  = document.getElementById('happyVideo');
+    const angelVideo  = document.getElementById('angelVideo');
+    const dancingVideo = document.getElementById('dancingVideo');
+    const sadVideo    = document.getElementById('sadVideo');
 
     // Customize here
     const dinnerDetails = {
@@ -326,13 +335,14 @@
       if (!videoEl) return;
       videoEl.pause();
       try { videoEl.currentTime = 0; } catch {}
-      videoEl.style.display = 'none'; // hide if needed
+      videoEl.style.display = 'none';
     }
 
     function stopAllVideos() {
       stopVideo(askVideo);
       stopVideo(happyVideo);
       stopVideo(angelVideo);
+      stopVideo(dancingVideo);
       stopVideo(sadVideo);
     }
 
@@ -364,13 +374,21 @@
       show('yes');
       happyVideo.style.display = 'block';
       angelVideo.style.display = 'none';
+      dancingVideo.style.display = 'none';
       happyVideo?.play().catch(() => {});
 
-      // Chain: when happy video ends → play Angel video
+      // Chain 1: happy → angel
       happyVideo.onended = () => {
         happyVideo.style.display = 'none';
         angelVideo.style.display = 'block';
         angelVideo?.play().catch(() => {});
+
+        // Chain 2: angel → dancing
+        angelVideo.onended = () => {
+          angelVideo.style.display = 'none';
+          dancingVideo.style.display = 'block';
+          dancingVideo?.play().catch(() => {});
+        };
       };
 
       setTimeout(() => clearInterval(heartTimer), 1200);
@@ -386,14 +404,18 @@
       sadVideo?.play().catch(() => {});
     });
 
-    // Pause everything when tab is hidden
+    // Pause everything when tab hidden
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopAllVideos();
     });
 
-    // Initial state
+    // Initial state: hide response videos
+    happyVideo.style.display = 'none';
+    angelVideo.style.display = 'none';
+    dancingVideo.style.display = 'none';
     stopVideo(happyVideo);
     stopVideo(angelVideo);
+    stopVideo(dancingVideo);
     stopVideo(sadVideo);
   </script>
 </body>
