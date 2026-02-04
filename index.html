@@ -139,15 +139,11 @@
       border: 1px solid rgba(255,255,255,.65);
       box-shadow: var(--shadow2);
       background: rgba(255,255,255,.45);
-      position: relative;
     }
     video{
       display:block;
       width:100%;
       height:auto;
-      position: absolute;
-      top: 0;
-      left: 0;
     }
     .divider{
       height:1px;
@@ -270,16 +266,16 @@
       <div id="yesResponse" style="display:none;">
         <div class="hearts">💙💙💙</div>
         <h1>Yayyyy! I’m the happiest guy alive! 🎉</h1>
-        <div class="video-wrap" style="height: auto; min-height: 315px;"> <!-- reserve space to prevent jump -->
+        <div class="video-wrap">
           <video id="happyVideo" controls playsinline preload="metadata">
             <source src="stitch-happy.mp4" type="video/mp4">
             <p>Stitch is so excited you're saying yes! 💕</p>
           </video>
-          <video id="angelVideo" controls playsinline preload="metadata">
+          <video id="angelVideo" controls playsinline preload="metadata" style="display:none;">
             <source src="stitch-angel-happy.mp4" type="video/mp4">
             <p>And now Angel joins the celebration! 💙✨</p>
           </video>
-          <video id="dancingVideo" controls playsinline preload="metadata">
+          <video id="dancingVideo" controls playsinline preload="metadata" style="display:none;">
             <source src="stitch-dancing.mp4" type="video/mp4">
             <p>Time to dance — we're celebrating! 🕺💃</p>
           </video>
@@ -322,7 +318,7 @@
 
     // Customize here
     const dinnerDetails = {
-      venue: "That cozy spot we talked about",   // ← change this!
+      venue: "That cozy spot we talked about",   // ← change this to your real plan!
       date: "February 14, 2026",
       time: "7:30 PM"
     };
@@ -377,13 +373,12 @@
       dancingVideo.style.display = 'none';
       happyVideo?.play().catch(() => {});
 
-      // Chain 1: happy → angel
+      // Chain: happy → angel → dancing
       happyVideo.onended = () => {
         happyVideo.style.display = 'none';
         angelVideo.style.display = 'block';
         angelVideo?.play().catch(() => {});
 
-        // Chain 2: angel → dancing
         angelVideo.onended = () => {
           angelVideo.style.display = 'none';
           dancingVideo.style.display = 'block';
@@ -404,15 +399,11 @@
       sadVideo?.play().catch(() => {});
     });
 
-    // Pause everything when tab hidden
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopAllVideos();
     });
 
-    // Initial state: hide response videos
-    happyVideo.style.display = 'none';
-    angelVideo.style.display = 'none';
-    dancingVideo.style.display = 'none';
+    // Initial state
     stopVideo(happyVideo);
     stopVideo(angelVideo);
     stopVideo(dancingVideo);
