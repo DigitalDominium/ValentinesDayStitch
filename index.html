@@ -260,7 +260,6 @@
       </div>
       <div class="note" id="note">P.S. The “No” button is just being honest… but I’m still hoping! 😄</div>
     </section>
-
     <section class="inner" id="response" style="display:none;">
       <!-- YES RESPONSE -->
       <div id="yesResponse" style="display:none;">
@@ -288,13 +287,12 @@
           <div style="margin-top:10px;"><b>Note:</b> Can’t wait to see your smile. You’re my favorite person. 💙</div>
         </div>
       </div>
-
       <!-- NO RESPONSE -->
       <div id="noResponse" style="display:none;">
         <div class="hearts">😭😭😭</div>
         <h1>Aww… okay… 🥺</h1>
         <div class="video-wrap">
-          <video id="sadVideo" controls playsinline preload="metadata">
+          <video id="sadVideo" controls autoplay muted playsinline preload="metadata" style="display:block;">
             <source src="stitch-sad.mp4" type="video/mp4">
           </video>
         </div>
@@ -302,7 +300,6 @@
       </div>
     </section>
   </main>
-
   <script>
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
@@ -310,19 +307,18 @@
     const response = document.getElementById('response');
     const yesResponse = document.getElementById('yesResponse');
     const noResponse = document.getElementById('noResponse');
-    const askVideo    = document.getElementById('askVideo');
-    const happyVideo  = document.getElementById('happyVideo');
-    const angelVideo  = document.getElementById('angelVideo');
+    const askVideo = document.getElementById('askVideo');
+    const happyVideo = document.getElementById('happyVideo');
+    const angelVideo = document.getElementById('angelVideo');
     const dancingVideo = document.getElementById('dancingVideo');
-    const sadVideo    = document.getElementById('sadVideo');
+    const sadVideo = document.getElementById('sadVideo');
 
     // Customize here
     const dinnerDetails = {
-      venue: "That cozy spot we talked about",   // ← change this to your real plan!
+      venue: "That cozy spot we talked about",
       date: "February 14, 2026",
       time: "7:30 PM"
     };
-
     document.getElementById('venueText').textContent = dinnerDetails.venue;
     document.getElementById('dateText').textContent = dinnerDetails.date;
     document.getElementById('timeText').textContent = dinnerDetails.time;
@@ -372,20 +368,16 @@
       angelVideo.style.display = 'none';
       dancingVideo.style.display = 'none';
       happyVideo?.play().catch(() => {});
-
-      // Chain: happy → angel → dancing
       happyVideo.onended = () => {
         happyVideo.style.display = 'none';
         angelVideo.style.display = 'block';
         angelVideo?.play().catch(() => {});
-
         angelVideo.onended = () => {
           angelVideo.style.display = 'none';
           dancingVideo.style.display = 'block';
           dancingVideo?.play().catch(() => {});
         };
       };
-
       setTimeout(() => clearInterval(heartTimer), 1200);
       const r = document.querySelector('.card').getBoundingClientRect();
       for (let i = 0; i < 18; i++) {
@@ -396,7 +388,16 @@
 
     noBtn.addEventListener('click', () => {
       show('no');
-      sadVideo?.play().catch(() => {});
+      if (sadVideo) {
+        sadVideo.currentTime = 0;
+        sadVideo.muted = true; // enforce muted
+        sadVideo.style.display = 'block'; // force visible
+        setTimeout(() => {
+          sadVideo.play()
+            .then(() => console.log("Sad Stitch video playing!"))
+            .catch(e => console.error("Sad video play failed:", e.message));
+        }, 100); // small delay helps with browser reflow
+      }
     });
 
     document.addEventListener('visibilitychange', () => {
